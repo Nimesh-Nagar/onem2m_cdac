@@ -1,3 +1,12 @@
+- lsusb	   : This lists the devices that are connected to the USB bus
+- iwconfig : used to set and view the parameters of the wireless interfaces seen by the operating system. 
+
+Next you will need to verify that all of the modes are supported by the hardware and drivers of your wireless adapter. 
+This can be accomplished using the 'iw' command in Kali: (use airmon-ng to know PHY)
+- iw phy0 info   
+
+
+-------------------------------------------------------------------------------------------------------------------------
 iwconfig 
 sudo airmon-ng check
 
