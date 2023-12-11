@@ -2,4 +2,4 @@
 oneM2M : The IoT Standard
 
 
-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
+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
