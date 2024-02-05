@@ -172,6 +172,17 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 ifconfig 
 
 dnsmasq -C ~/iot_security/evil_twin/dnsmasq.conf -d 
+-------------------------------------------------------------
+
+ TRY Evil twin once again 
+ automate the deauth 
+
+
+
+
+
+
+
 
 
 
