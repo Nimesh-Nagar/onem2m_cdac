@@ -42,12 +42,12 @@ const char* ssid = "TLS-TEST"; //Enter your SSID
 const char* password = "12345678"; //Enter your SSID Password
 
 // String CSE_IP = "127.0.0.1"; //Enter your IP of server where CSE is running
-String CSE_IP = "10.182.2.146"; //Enter your IP of server where CSE is running
+String CSE_IP = "10.182.2.233"; //Enter your IP of server where CSE is running
 String CSE_PORT = "8080"; //Enter your Port to which CSE is Listening
 
 String SERVER_NAME = "server"; // Enter your CSE name
-String MY_AE = "Cdac_AE"; // Enter AE name to be created
-String MY_Origin = "CAdmin"; // Enter Originator name who creates AE
+String MY_AE = "cdac_ae"; // Enter AE name to be created
+String MY_Origin = "onem2m_esp32"; // Enter Originator name who creates AE
 //This is your URL for CSE Server
 String url = "http://" + CSE_IP + ":" + CSE_PORT + "/" + SERVER_NAME;
 // String url = "http://" + CSE_IP + ":" + CSE_PORT + "/" ;
