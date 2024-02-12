@@ -41,8 +41,8 @@ byte mac[6];
 const char* ssid = "TLS-TEST"; //Enter your SSID
 const char* password = "12345678"; //Enter your SSID Password
 
-// String CSE_IP = "127.0.0.1"; //Enter your IP of server where CSE is running
-String CSE_IP = "10.182.2.233"; //Enter your IP of server where CSE is running
+ String CSE_IP = "127.0.0.1"; //Enter your IP of server where CSE is running
+//String CSE_IP = "10.182.2.233"; //Enter your IP of server where CSE is running
 String CSE_PORT = "8080"; //Enter your Port to which CSE is Listening
 
 String SERVER_NAME = "server"; // Enter your CSE name
