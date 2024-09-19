@@ -174,8 +174,10 @@ ifconfig
 dnsmasq -C ~/iot_security/evil_twin/dnsmasq.conf -d 
 -------------------------------------------------------------
 
- TRY Evil twin once again 
- automate the deauth 
+ 
+ 1. automate the deauth 
+ 2. implement MITM attack
+ 3. TRY Evil twin once again  
 
 
 
