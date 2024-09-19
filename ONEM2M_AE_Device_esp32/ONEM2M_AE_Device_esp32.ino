@@ -38,16 +38,19 @@
 #endif
 
 byte mac[6];
-const char* ssid = "TLS-TEST"; //Enter your SSID
-const char* password = "12345678"; //Enter your SSID Password
+// const char* ssid = "TLS-TEST"; 
+// const char* password = "12345678"; 
+const char* ssid = "CDAC2.4-AP15"; //Enter your SSID
+const char* password = "CdacDelta@#321"; //Enter your SSID Password
 
- String CSE_IP = "127.0.0.1"; //Enter your IP of server where CSE is running
+String CSE_IP = "192.168.0.133"; //Enter your IP of server where CSE is running
 //String CSE_IP = "10.182.2.233"; //Enter your IP of server where CSE is running
 String CSE_PORT = "8080"; //Enter your Port to which CSE is Listening
 
-String SERVER_NAME = "server"; // Enter your CSE name
-String MY_AE = "cdac_ae"; // Enter AE name to be created
-String MY_Origin = "onem2m_esp32"; // Enter Originator name who creates AE
+String SERVER_NAME = "server";      // Enter your CSE name
+String MY_AE = "cdac_ae";           // Enter AE name to be created
+String MY_Origin = "CDAC_Device"; // Enter Originator name who creates AE (should start with C)
+
 //This is your URL for CSE Server
 String url = "http://" + CSE_IP + ":" + CSE_PORT + "/" + SERVER_NAME;
 // String url = "http://" + CSE_IP + ":" + CSE_PORT + "/" ;
@@ -225,7 +228,7 @@ int DeleteAE(String httpUrl, String Cae_Name, String AE_name)
 
 void Connect_to_CSE() {
 part1:
-  int resp = CreateAE(url, MY_Origin, MY_AE , "test.comapny.org");
+  int resp = CreateAE(url, MY_Origin, MY_AE , "cdac.blr.org");
   if (resp == -1)
   {
     DBGln("unable to connect to CSE") ;
