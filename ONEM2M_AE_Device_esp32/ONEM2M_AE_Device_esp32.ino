@@ -38,14 +38,14 @@
 #endif
 
 byte mac[6];
-// const char* ssid = "TLS-TEST"; 
-// const char* password = "12345678"; 
-const char* ssid = "CDAC2.4-AP15"; //Enter your SSID
-const char* password = "CdacDelta@#321"; //Enter your SSID Password
+const char* ssid = "CDAC2.4-AP15"; 
+const char* password = "CdacDelta@#321"; 
+// const char* ssid = "cdac_ap"; //Enter your SSID
+// const char* password = "cdac@1234"; //Enter your SSID Password
 
-String CSE_IP = "192.168.0.133"; //Enter your IP of server where CSE is running
-//String CSE_IP = "10.182.2.233"; //Enter your IP of server where CSE is running
-String CSE_PORT = "8080"; //Enter your Port to which CSE is Listening
+// String CSE_IP = "192.168.0.133"; //Enter your IP of server where CSE is running
+String CSE_IP = "10.182.4.86"; //Enter your IP of server where CSE is running
+String CSE_PORT = "9090"; //Enter your Port to which CSE is Listening
 
 String SERVER_NAME = "server";      // Enter your CSE name
 String MY_AE = "cdac_ae";           // Enter AE name to be created
